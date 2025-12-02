@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  ollama:
+    build: .
+    image: ollama-qwen3:1.7b
+    container_name: ollama-qwen3
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      # Prefer GPU if Ollama and the model support it (optional)
+      - OLLAMA_PREFER_GPU=true
+    # If you need GPU support with nvidia-container-toolkit, uncomment the following line
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+volumes:
+  ollama_data:
